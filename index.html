@@ -3,34 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loading Git Q</title>   
+    <title>Loading Harmonize</title>   
     <style>
     * {
       box-sizing: border-box;
     }
     body {
-      background: #ffdcf4;
+      background: #eaf2d7;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100vh;
       margin: 0;
-      color: white; /* Text color */
-      font-family: Arial, sans-serif; /* Choose your preferred font */
+      color: black; 
+      font-family: 'Courier New', Courier, monospace; 
     }
     .content {
       text-align: center;
     }
     .content img {
-      width: 300px; /* Adjust image width as needed */
+      width: 300px; 
     }
     </style>
 </head>
 <body>
     <div class="content">
         <img src="a.gif" alt="Your GIF animation" style="width: 100px;">
-        <p>Here is your GIF animation!</p>
+        <p id="loadingText"></p>
     </div>
+
+    <script>
+        const text = "Harmonize for Github";
+        const delay = 100; // Delay between each letter in milliseconds
+        let index = 0;
+
+        function typeWriter() {
+            if (index < text.length) {
+                document.getElementById("loadingText").innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, delay);
+            }
+        }
+
+        typeWriter();
+    </script>
 </body>
 </html>
