@@ -29,21 +29,19 @@
 <body>
   <div class="repo-score-results">
     <h2>Toxicity Score</h2>
-    <p><span id="repoScore" style="color: red;">Hello</span>
+    <p><span id="repoScore"></span>
     </p>
   </div>
 
   <!-- Include any necessary JavaScript scripts here -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Extract the repo score from the URL query parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        const repoScore = urlParams.get('score');
-        console.log(repoScore);
-    
-        // Update the content of the repo score element
-        document.getElementById("repoScore").textContent = repoScore;
-      });
+    // Extract the repo score from the URL query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const repoScore = urlParams.get('score');
+    console.log(repoScore);
+
+    // Update the content of the repo score element
+    document.getElementById("repoScore").textContent = repoScore;
   </script>
 </body>
 </html>
