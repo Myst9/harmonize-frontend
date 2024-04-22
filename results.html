@@ -1,32 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loading Screen</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Repo Score Results</title>
+  <!-- Add any necessary CSS styles here -->
+  <style>
+    /* Add your CSS styles for the result display here */
+  </style>
 </head>
 <body>
-    <!-- Loading content will be displayed here -->
-    <p id="loadingText"></p>
+  <div class="repo-score-results">
+    <!-- Display the repo score results here -->
+    <h2>Repo Score Results</h2>
+    <p>The toxicity score of the repository is: <span id="repoScore"></span></p>
+    <!-- You can add more elements to display additional information if needed -->
+  </div>
 
-    <script>
-        // Listen for messages from the parent window
-        window.addEventListener('message', function(event) {
-            if (event.origin === 'chrome-extension://fhepidjflilplfickndnjlgdbfokciac') {
-                // Handle the received message (in this case, the result)
-                var result = event.data;
-                displayResult(result);
-            }
-        });
+  <!-- Include any necessary JavaScript scripts here -->
+  <script>
+    // Extract the repo score from the URL query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const repoScore = urlParams.get('score');
 
-        // Notify the parent window that the loading screen is ready
-        window.parent.postMessage('loadingScreenReady', 'https://chrome-extension');
-
-        // Function to display the result
-        function displayResult(result) {
-            var loadingText = document.getElementById('loadingText');
-            loadingText.textContent = 'Repo\'s Toxicity Score: ' + result;
-        }
-    </script>
+    // Update the content of the repo score element
+    document.getElementById("repoScore").textContent = repoScore;
+  </script>
 </body>
 </html>
