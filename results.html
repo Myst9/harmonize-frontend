@@ -7,12 +7,29 @@
   <!-- Add any necessary CSS styles here -->
   <style>
     /* Add your CSS styles for the result display here */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      background: #eaf2d7;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      color: black; 
+      font-family: 'Courier New', Courier, monospace; 
+    }
+    .repo-score-results {
+      text-align: center;
+    }
   </style>
 </head>
 <body>
   <div class="repo-score-results">
-    <h2>Repo Score Results</h2>
-    <p>The toxicity score of the repository is: <span id="repoScore" style="color: red;">Hello</span>
+    <h2>Toxicity Score</h2>
+    <p><span id="repoScore" style="color: red;">Hello</span>
     </p>
   </div>
 
