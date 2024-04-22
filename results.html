@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Screen</title>
+</head>
+<body>
+    <!-- Loading content will be displayed here -->
+    <p id="loadingText"></p>
+
+    <script>
+        // Listen for messages from the parent window
+        window.addEventListener('message', function(event) {
+            if (event.origin === 'chrome-extension://fhepidjflilplfickndnjlgdbfokciac') {
+                // Handle the received message (in this case, the result)
+                var result = event.data;
+                displayResult(result);
+            }
+        });
+
+        // Notify the parent window that the loading screen is ready
+        window.parent.postMessage('loadingScreenReady', 'https://chrome-extension');
+
+        // Function to display the result
+        function displayResult(result) {
+            var loadingText = document.getElementById('loadingText');
+            loadingText.textContent = 'Repo\'s Toxicity Score: ' + result;
+        }
+    </script>
+</body>
+</html>
