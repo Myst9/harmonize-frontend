@@ -47,19 +47,19 @@
     // Check if the score is greater than 75 and append badge if true
     if (repoScore > 75) {
       const badgeImg = document.createElement("img");
-      badgeImg.src = "red.png";
+      badgeImg.src = "bronze.png";
       badgeImg.alt = "High Score Badge";
       document.querySelector(".badge").appendChild(badgeImg);
     }
     else if (repoScore > 50) {
       const badgeImg = document.createElement("img");
-      badgeImg.src = "yellow.png";
+      badgeImg.src = "silver.png";
       badgeImg.alt = "Medium Score Badge";
       document.querySelector(".badge").appendChild(badgeImg);
     }
     else {
       const badgeImg = document.createElement("img");
-      badgeImg.src = "green.png";
+      badgeImg.src = "gold.png";
       badgeImg.alt = "Low Score Badge";
       document.querySelector(".badge").appendChild(badgeImg);
     }
