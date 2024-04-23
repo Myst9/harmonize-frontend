@@ -28,20 +28,41 @@
 </head>
 <body>
   <div class="repo-score-results">
-    <h2>Toxicity Score</h2>
-    <p><span id="repoScore"></span>
-    </p>
+    <div class="badge">
+    </div>
+    <!-- <h2>Toxicity Score</h2> -->
+    <h2><span id="repoScoreLabel">Toxicity Score: </span><span id="repoScore"></span>
+    </h2>
   </div>
 
-  <!-- Include any necessary JavaScript scripts here -->
   <script>
     // Extract the repo score from the URL query parameter
     const urlParams = new URLSearchParams(window.location.search);
-    const repoScore = urlParams.get('score');
+    const repoScore = parseInt(urlParams.get('score')); // Parse score as float
     console.log(repoScore);
-
+  
     // Update the content of the repo score element
     document.getElementById("repoScore").textContent = repoScore;
+  
+    // Check if the score is greater than 75 and append badge if true
+    if (repoScore > 75) {
+      const badgeImg = document.createElement("img");
+      badgeImg.src = "red.png";
+      badgeImg.alt = "High Score Badge";
+      document.querySelector(".badge").appendChild(badgeImg);
+    }
+    else if (repoScore > 50) {
+      const badgeImg = document.createElement("img");
+      badgeImg.src = "yellow.png";
+      badgeImg.alt = "Medium Score Badge";
+      document.querySelector(".badge").appendChild(badgeImg);
+    }
+    else {
+      const badgeImg = document.createElement("img");
+      badgeImg.src = "green.png";
+      badgeImg.alt = "Low Score Badge";
+      document.querySelector(".badge").appendChild(badgeImg);
+    }
   </script>
 </body>
 </html>
