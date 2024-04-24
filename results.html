@@ -77,24 +77,20 @@
     let chartsVisible = false; // Variable to track if charts are visible or not
 
     // Function to toggle visibility of charts
-    // Function to toggle visibility of charts and adjust iframe height
-function toggleCharts() {
-  const chartContainer = document.getElementById('chartContainer');
-  const scoreChartContainer = document.getElementById('scoreChartContainer');
-  const iframe = document.querySelector('iframe');
+    function toggleCharts() {
+        const chartContainer = document.getElementById('chartContainer');
+        const scoreChartContainer = document.getElementById('scoreChartContainer');
 
-  if (!chartsVisible) {
-      chartContainer.style.display = 'block'; // Show the user chart
-      scoreChartContainer.style.display = 'block'; // Show the score chart
-      iframe.style.height = '60rem'; // Increase iframe height
-      chartsVisible = true; // Update the variable
-  } else {
-      chartContainer.style.display = 'none'; // Hide the user chart
-      scoreChartContainer.style.display = 'none'; // Hide the score chart
-      iframe.style.height = '18rem'; // Reset iframe height
-      chartsVisible = false; // Update the variable
-  }
-}
+        if (!chartsVisible) {
+            chartContainer.style.display = 'block'; // Show the user chart
+            scoreChartContainer.style.display = 'block'; // Show the score chart
+            chartsVisible = true; // Update the variable
+        } else {
+            chartContainer.style.display = 'none'; // Hide the user chart
+            scoreChartContainer.style.display = 'none'; // Hide the score chart
+            chartsVisible = false; // Update the variable
+        }
+    }
 
     // Function to parse URL query parameters
     function getParameterByName(name, url) {
