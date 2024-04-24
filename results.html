@@ -15,24 +15,32 @@
             background: #eaf2d7;
             overflow: hidden;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            height: 100%;
             margin: 0;
             color: black;
             font-family: 'Courier New', Courier, monospace;
         }
 
-        .repo-score-results {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 20px;
+        .badge-container {
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .repo-score {
+            margin-bottom: 10px;
         }
 
         .chart-container {
-            width: 400px;
+            width: 100%;
+            max-width: 400px;
             height: 400px;
         }
 
@@ -58,16 +66,19 @@
     </style>
 </head>
 <body>
-<div class="repo-score-results">
+<div class="badge-container">
     <div class="badge">
+        <img src="bronze.png" alt="High Score Badge">
     </div>
-    <h2><span id="repoScoreLabel">Toxicity Score: </span><span id="repoScore"></span></h2>
-    <div class="chart-container">
-        <canvas id="userChart" width="400" height="400"></canvas>
-    </div>
-    <div class="chart-container">
-        <canvas id="scoreChart" width="400" height="400"></canvas>
-    </div>
+</div>
+<div class="repo-score">
+    <h2>Toxicity Score: <span id="repoScore">75</span></h2>
+</div>
+<div class="chart-container">
+    <canvas id="userChart"></canvas>
+</div>
+<div class="chart-container">
+    <canvas id="scoreChart"></canvas>
 </div>
 
 <!-- Add Chart.js library -->
@@ -93,20 +104,6 @@
 
     // Update the content of the repo score element
     document.getElementById("repoScore").textContent = repoScore;
-
-    // Check the repo score and append badge accordingly
-    const badgeImg = document.createElement("img");
-    if (repoScore > 75) {
-        badgeImg.src = "bronze.png";
-        badgeImg.alt = "High Score Badge";
-    } else if (repoScore > 50) {
-        badgeImg.src = "silver.png";
-        badgeImg.alt = "Medium Score Badge";
-    } else {
-        badgeImg.src = "gold.png";
-        badgeImg.alt = "Low Score Badge";
-    }
-    document.querySelector(".badge").appendChild(badgeImg);
 
     // Prepare data for the user chart
     const userLabels = Object.keys(userdict);
