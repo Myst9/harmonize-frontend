@@ -49,6 +49,7 @@
     <!-- <h2>Toxicity Score</h2> -->
     <h2><span id="repoScoreLabel">Toxicity Score: </span><span id="repoScore"></span>
     </h2>
+    <canvas id="scoreChart" width="400" height="400"></canvas>
   </div>
 
   <!-- Add Chart.js library -->
@@ -93,29 +94,33 @@
       document.querySelector(".badge").appendChild(badgeImg);
     }
 
-    // Create the chart using Chart.js
-    const ctx = document.createElement('canvas');
-    ctx.id = 'chartCanvas';
-    document.body.appendChild(ctx);
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: graphData.users,
-            datasets: [{
-                label: 'Toxicity Score',
-                data: graphData.toxicities,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+    // Prepare data for the chart
+    const labels = Object.keys(graphData);
+    const scores = Object.values(graphData);
+
+    // Create chart
+    const ctx = document.getElementById('scoreChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Scores',
+          data: scores,
+          backgroundColor: 'rgba(54, 162, 235, 0.6)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
             }
+          }]
         }
+      }
     });
   </script>
 </body>
