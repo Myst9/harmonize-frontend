@@ -39,29 +39,16 @@
         }
 
         .chart-container {
+            display: none; /* Initially hide the chart containers */
             width: 100%;
             max-width: 400px;
             height: 400px;
         }
 
-        /* Define pulsing animation */
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.2);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        /* Apply pulsing animation to badge images */
-        .badge img {
-            animation: pulse 2s infinite; /* Change '2s' to adjust the speed of pulsing */
+        .view-more-button {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -74,16 +61,37 @@
 <div class="repo-score">
     <h2>Toxicity Score: <span id="repoScore">75</span></h2>
 </div>
-<div class="chart-container">
+<div class="view-more-container">
+    <span class="view-more-button" onclick="toggleCharts()">View More</span>
+</div>
+<div class="chart-container" id="chartContainer">
     <canvas id="userChart"></canvas>
 </div>
-<div class="chart-container">
+<div class="chart-container" id="scoreChartContainer">
     <canvas id="scoreChart"></canvas>
 </div>
 
 <!-- Add Chart.js library -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    let chartsVisible = false; // Variable to track if charts are visible or not
+
+    // Function to toggle visibility of charts
+    function toggleCharts() {
+        const chartContainer = document.getElementById('chartContainer');
+        const scoreChartContainer = document.getElementById('scoreChartContainer');
+
+        if (!chartsVisible) {
+            chartContainer.style.display = 'block'; // Show the user chart
+            scoreChartContainer.style.display = 'block'; // Show the score chart
+            chartsVisible = true; // Update the variable
+        } else {
+            chartContainer.style.display = 'none'; // Hide the user chart
+            scoreChartContainer.style.display = 'none'; // Hide the score chart
+            chartsVisible = false; // Update the variable
+        }
+    }
+
     // Function to parse URL query parameters
     function getParameterByName(name, url) {
         if (!url) url = window.location.href;
