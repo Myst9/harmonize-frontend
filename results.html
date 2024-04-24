@@ -111,58 +111,82 @@
     const userScores = Object.values(userdict);
 
     // Create user chart
-    const userCtx = document.getElementById('userChart').getContext('2d');
-    const userChart = new Chart(userCtx, {
-        type: 'bar',
-        data: {
-            labels: userLabels,
-            datasets: [{
-                label: 'User Scores',
-                data: userScores,
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
+const userCtx = document.getElementById('userChart').getContext('2d');
+const userChart = new Chart(userCtx, {
+    type: 'bar',
+    data: {
+        labels: userLabels,
+        datasets: [{
+            label: 'User Scores',
+            data: userScores,
+            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                title: {
+                    display: true,
+                    text: 'Scores',
+                    color: 'black'
+                },
+                ticks: {
+                    beginAtZero: true
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: 'Users',
+                    color: 'black'
+                }
             }
         }
-    });
+    }
+});
 
     // Prepare data for the score chart
     const scoreLabels = Object.keys(scoredict);
     const scoreValues = Object.values(scoredict);
 
     // Create score chart
-    const scoreCtx = document.getElementById('scoreChart').getContext('2d');
-    const scoreChart = new Chart(scoreCtx, {
-        type: 'bar',
-        data: {
-            labels: scoreLabels,
-            datasets: [{
-                label: 'Score Distribution',
-                data: scoreValues,
-                backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
+const scoreCtx = document.getElementById('scoreChart').getContext('2d');
+const scoreChart = new Chart(scoreCtx, {
+    type: 'bar',
+    data: {
+        labels: scoreLabels,
+        datasets: [{
+            label: 'Score Distribution',
+            data: scoreValues,
+            backgroundColor: 'rgba(255, 99, 132, 0.6)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                title: {
+                    display: true,
+                    text: 'Frequency of Comments',
+                    color: 'black'
+                },
+                ticks: {
+                    beginAtZero: true
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: 'Score Range',
+                    color: 'black'
+                }
             }
         }
-    });
+    }
+});
 </script>
 </body>
 </html>
