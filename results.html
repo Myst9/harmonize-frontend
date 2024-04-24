@@ -92,6 +92,11 @@
         }
     }
 
+    function adjustIframeHeight() {
+      // Adjust the height of the iframe
+      window.parent.postMessage({ action: 'adjustHeight' }, '*');
+  }
+
     // Function to parse URL query parameters
     function getParameterByName(name, url) {
         if (!url) url = window.location.href;
