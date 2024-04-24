@@ -69,7 +69,7 @@
 <body>
 <div class="badge-container">
     <div class="badge">
-        <img src="bronze.png" alt="High Score Badge">
+        
     </div>
 </div>
 <div class="repo-score">
@@ -106,6 +106,32 @@
     // Update the content of the repo score element
     document.getElementById("repoScore").textContent = repoScore;
 
+    if (repoScore > 75) {
+      const badgeImg = document.createElement("img");
+      badgeImg.src = "bronze.png";
+      badgeImg.alt = "High Score Badge";
+      document.querySelector(".badge").appendChild(badgeImg);
+    }
+    else if (repoScore > 50) {
+      const badgeImg = document.createElement("img");
+      badgeImg.src = "silver.png";
+      badgeImg.alt = "Medium Score Badge";
+      document.querySelector(".badge").appendChild(badgeImg);
+    }
+    else {
+      const badgeImg = document.createElement("img");
+      badgeImg.src = "gold.png";
+      badgeImg.alt = "Low Score Badge";
+      document.querySelector(".badge").appendChild(badgeImg);
+    }
+    
+    function createBadge(src, alt) {
+      const badgeImg = document.createElement("img");
+      badgeImg.src = src;
+      badgeImg.alt = alt;
+      badgeContainer.innerHTML = ''; // Clear existing badges
+      badgeContainer.appendChild(badgeImg);
+    }
     // Prepare data for the user chart
     const userLabels = Object.keys(userdict);
     const userScores = Object.values(userdict);
