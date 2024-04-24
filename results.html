@@ -24,6 +24,22 @@
     .repo-score-results {
       text-align: center;
     }
+    /* Define pulsing animation */
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    /* Apply pulsing animation to badge images */
+    .badge img {
+      animation: pulse 2s infinite; /* Change '2s' to adjust the speed of pulsing */
+    }
   </style>
 </head>
 <body>
@@ -35,15 +51,28 @@
     </h2>
   </div>
 
+  <!-- Add Chart.js library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    // Extract the repo score from the URL query parameter
-    const urlParams = new URLSearchParams(window.location.search);
-    const repoScore = parseInt(urlParams.get('score')); // Parse score as float
-    console.log(repoScore);
-  
+    // Function to parse URL query parameters
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    // Extract repo score and graph data from URL query parameters
+    const repoScore = parseInt(getParameterByName('score')); // Parse score as float
+    const serializedGraphData = getParameterByName('graphData');
+    const graphData = JSON.parse(decodeURIComponent(serializedGraphData));
+
     // Update the content of the repo score element
     document.getElementById("repoScore").textContent = repoScore;
-  
+
     // Check if the score is greater than 75 and append badge if true
     if (repoScore > 75) {
       const badgeImg = document.createElement("img");
@@ -63,6 +92,31 @@
       badgeImg.alt = "Low Score Badge";
       document.querySelector(".badge").appendChild(badgeImg);
     }
+
+    // Create the chart using Chart.js
+    const ctx = document.createElement('canvas');
+    ctx.id = 'chartCanvas';
+    document.body.appendChild(ctx);
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: graphData.users,
+            datasets: [{
+                label: 'Toxicity Score',
+                data: graphData.toxicities,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
   </script>
 </body>
 </html>
