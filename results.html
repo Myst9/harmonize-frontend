@@ -24,7 +24,16 @@
         }
 
         .repo-score-results {
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .chart-container {
+            width: 400px;
+            height: 400px;
         }
 
         /* Define pulsing animation */
@@ -53,7 +62,12 @@
     <div class="badge">
     </div>
     <h2><span id="repoScoreLabel">Toxicity Score: </span><span id="repoScore"></span></h2>
-    <canvas id="scoreChart" width="400" height="400"></canvas>
+    <div class="chart-container">
+        <canvas id="userChart" width="400" height="400"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="scoreChart" width="400" height="400"></canvas>
+    </div>
 </div>
 
 <!-- Add Chart.js library -->
@@ -94,21 +108,50 @@
     }
     document.querySelector(".badge").appendChild(badgeImg);
 
-    // Prepare data for the chart
-    const labels = Object.keys(userdict);
-    const scores = Object.values(userdict);
+    // Prepare data for the user chart
+    const userLabels = Object.keys(userdict);
+    const userScores = Object.values(userdict);
 
-    // Create chart
-    const ctx = document.getElementById('scoreChart').getContext('2d');
-    const myChart = new Chart(ctx, {
+    // Create user chart
+    const userCtx = document.getElementById('userChart').getContext('2d');
+    const userChart = new Chart(userCtx, {
         type: 'bar',
         data: {
-            labels: labels,
+            labels: userLabels,
             datasets: [{
-                label: 'Scores',
-                data: scores,
+                label: 'User Scores',
+                data: userScores,
                 backgroundColor: 'rgba(54, 162, 235, 0.6)',
                 borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    // Prepare data for the score chart
+    const scoreLabels = Object.keys(scoredict);
+    const scoreValues = Object.values(scoredict);
+
+    // Create score chart
+    const scoreCtx = document.getElementById('scoreChart').getContext('2d');
+    const scoreChart = new Chart(scoreCtx, {
+        type: 'bar',
+        data: {
+            labels: scoreLabels,
+            datasets: [{
+                label: 'Score Distribution',
+                data: scoreValues,
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
                 borderWidth: 1
             }]
         },
