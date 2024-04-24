@@ -1,60 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Repo Score Results</title>
-  <!-- Add any necessary CSS styles here -->
-  <style>
-    /* Add your CSS styles for the result display here */
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      background: #eaf2d7;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      color: black; 
-      font-family: 'Courier New', Courier, monospace; 
-    }
-    .repo-score-results {
-      text-align: center;
-    }
-    /* Define pulsing animation */
-    @keyframes pulse {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.2);
-      }
-      100% {
-        transform: scale(1);
-      }
-    }
-    /* Apply pulsing animation to badge images */
-    .badge img {
-      animation: pulse 2s infinite; /* Change '2s' to adjust the speed of pulsing */
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repo Score Results</title>
+    <!-- Add any necessary CSS styles here -->
+    <style>
+        /* Add your CSS styles for the result display here */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #eaf2d7;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: black;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .repo-score-results {
+            text-align: center;
+        }
+
+        /* Define pulsing animation */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Apply pulsing animation to badge images */
+        .badge img {
+            animation: pulse 2s infinite; /* Change '2s' to adjust the speed of pulsing */
+        }
+    </style>
 </head>
 <body>
-  <div class="repo-score-results">
+<div class="repo-score-results">
     <div class="badge">
     </div>
-    <!-- <h2>Toxicity Score</h2> -->
-    <h2><span id="repoScoreLabel">Toxicity Score: </span><span id="repoScore"></span>
-    </h2>
+    <h2><span id="repoScoreLabel">Toxicity Score: </span><span id="repoScore"></span></h2>
     <canvas id="scoreChart" width="400" height="400"></canvas>
-  </div>
+</div>
 
-  <!-- Add Chart.js library -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
+<!-- Add Chart.js library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
     // Function to parse URL query parameters
     function getParameterByName(name, url) {
         if (!url) url = window.location.href;
@@ -66,62 +70,58 @@
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
 
-    // Extract repo score and graph data from URL query parameters
+    // Extract repo score, userdict, and scoredict from URL query parameters
     const repoScore = parseInt(getParameterByName('score')); // Parse score as float
-    const serializedGraphData = getParameterByName('graphData');
-    const graphData = JSON.parse(decodeURIComponent(serializedGraphData));
+    const serializedUserDict = getParameterByName('userdict');
+    const serializedScoreDict = getParameterByName('scoredict');
+    const userdict = JSON.parse(decodeURIComponent(serializedUserDict));
+    const scoredict = JSON.parse(decodeURIComponent(serializedScoreDict));
 
     // Update the content of the repo score element
     document.getElementById("repoScore").textContent = repoScore;
 
-    // Check if the score is greater than 75 and append badge if true
+    // Check the repo score and append badge accordingly
+    const badgeImg = document.createElement("img");
     if (repoScore > 75) {
-      const badgeImg = document.createElement("img");
-      badgeImg.src = "bronze.png";
-      badgeImg.alt = "High Score Badge";
-      document.querySelector(".badge").appendChild(badgeImg);
+        badgeImg.src = "bronze.png";
+        badgeImg.alt = "High Score Badge";
+    } else if (repoScore > 50) {
+        badgeImg.src = "silver.png";
+        badgeImg.alt = "Medium Score Badge";
+    } else {
+        badgeImg.src = "gold.png";
+        badgeImg.alt = "Low Score Badge";
     }
-    else if (repoScore > 50) {
-      const badgeImg = document.createElement("img");
-      badgeImg.src = "silver.png";
-      badgeImg.alt = "Medium Score Badge";
-      document.querySelector(".badge").appendChild(badgeImg);
-    }
-    else {
-      const badgeImg = document.createElement("img");
-      badgeImg.src = "gold.png";
-      badgeImg.alt = "Low Score Badge";
-      document.querySelector(".badge").appendChild(badgeImg);
-    }
+    document.querySelector(".badge").appendChild(badgeImg);
 
     // Prepare data for the chart
-    const labels = Object.keys(graphData);
-    const scores = Object.values(graphData);
+    const labels = Object.keys(userdict);
+    const scores = Object.values(userdict);
 
     // Create chart
     const ctx = document.getElementById('scoreChart').getContext('2d');
     const myChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: 'Scores',
-          data: scores,
-          backgroundColor: 'rgba(54, 162, 235, 0.6)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Scores',
+                data: scores,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
             }
-          }]
         }
-      }
     });
-  </script>
+</script>
 </body>
 </html>
